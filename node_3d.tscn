@@ -1,0 +1,111 @@
+[gd_scene load_steps=18 format=3 uid="uid://de7gryho1ua4e"]
+
+[ext_resource type="Script" path="res://character_body_3d.gd" id="1_mla83"]
+[ext_resource type="PackedScene" uid="uid://dos7w88rb2v1k" path="res://addons/kaykit_character_pack_adventures/Characters/gltf/Barbarian.glb" id="2_opg3u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23hod"]
+albedo_color = Color(0.781926, 0.483812, 1.92523e-07, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l8wwk"]
+material = SubResource("StandardMaterial3D_23hod")
+size = Vector3(50, 0.1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sh81u"]
+size = Vector3(50, 0.25, 50)
+
+[sub_resource type="SphereMesh" id="SphereMesh_pvfp1"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mrd58"]
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_x6fcb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_20yl5"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_r5hxj"]
+albedo_color = Color(0.903809, 0.252294, 0.654235, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3veyp"]
+material = SubResource("ORMMaterial3D_r5hxj")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i6bxa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2dtuw"]
+albedo_color = Color(0.319255, 0.319255, 0.319255, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6evxt"]
+material = SubResource("StandardMaterial3D_2dtuw")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hdqdp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ql2bm"]
+albedo_color = Color(0.230695, 0.617873, 0.793065, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_lpat5"]
+material = SubResource("StandardMaterial3D_ql2bm")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="suelo" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.251925, 6.13917, 4.34935)
+mesh = SubResource("BoxMesh_l8wwk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="suelo"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="suelo/StaticBody3D"]
+shape = SubResource("BoxShape3D_sh81u")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(0.0713581, 0, -0.997451, 0, 1, 0, 0.997451, 0, 0.0713581, -18.1886, 17.0544, 13.8836)
+disable_mode = 1
+script = ExtResource("1_mla83")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("SphereMesh_pvfp1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("SphereShape3D_mrd58")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="CharacterBody3D"]
+camera_attributes = SubResource("CameraAttributesPhysical_x6fcb")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(0.969991, 0, -0.243141, 0, 1, 0, 0.243141, 0, 0.969991, 0, 0, 0)
+
+[node name="Barbarian" parent="CharacterBody3D" instance=ExtResource("2_opg3u")]
+transform = Transform3D(-0.990167, 0, -0.139882, 0, 1, 0, 0.139882, 0, -0.990167, -0.463119, -1.48961, -2.35727)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.00413458, -0.814166, 0.580617, -0.00579754, 0.580632, 0.814146, -0.999975, 0, -0.00712083, 23.3693, 30.0662, 2.58029)
+light_color = Color(0.894922, 0.894922, 0.894922, 1)
+light_energy = 4.891
+light_indirect_energy = 4.676
+light_volumetric_fog_energy = 4.459
+light_angular_distance = 90.0
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(0.997109, 0, 0, 0, 0.997109, 0, 0, 0, 0.997109, 0, 25.3544, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(2.00599, 0, 0, 0, 1.73619, 0, 0, 0, 1, -0.00178854, 1.34941, -0.0241444)
+shape = SubResource("BoxShape3D_20yl5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_3veyp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(13.5228, 0, 0, 0, 1.64186, 0, 0, 0, 20.6699, -10.985, 6.38266, 9.76764)
+shape = SubResource("BoxShape3D_i6bxa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_6evxt")
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.20553, 10.0579, 3.6838)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2"]
+shape = SubResource("SphereShape3D_hdqdp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2/CollisionShape3D"]
+mesh = SubResource("SphereMesh_lpat5")
